@@ -32,4 +32,5 @@ int main(int argc, char** argv)
 
 void init_map(){ 
   functional_map["2015_1"]=aoc2015::day1::run;
+  functional_map["2015_2"]=aoc2015::day2::run;
 }
