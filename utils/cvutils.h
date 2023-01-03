@@ -5,6 +5,34 @@
 
 #include "opencv2/opencv.hpp"
 
+
+class Point{
+    public:
+    int x,y;
+    Point():x(0),y(0){}
+    Point(int _x,int _y):x(_x),y(_y){}
+
+    Point operator+(const Point& o){
+        return Point(x+o.x,y+o.y);
+    }
+    Point operator+=(const Point& o){
+        x+=o.x;
+        y+=o.y;
+        return *this;
+    }
+    Point operator-(const Point& o){
+        this->x -= o.x;
+        this->y -= o.y;
+        return Point(x-o.x,y-o.y);
+    }
+    bool operator==(const Point& o){
+        return x==o.x&&y==o.y;
+    }
+    bool operator<(const Point& o)const{
+        return y<o.y || (y==o.y && x<o.x);
+    }
+};
+
 extern void show(std::string title,int i);
 void resize(int x);
 void  showResize(std::string title,int i);
