@@ -4,7 +4,7 @@ project(helloworld) #name of your project
 
 include_directories(./)
 include_directories(./headers)
-add_executable(aoc main.cpp ./utils/cvutils.cpp)
+add_executable(aoc main.cpp ./utils/cvutils.cpp ./utils/md5.cpp)
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 target_compile_options(aoc PRIVATE -Wall -ggdb3)
