@@ -21,6 +21,7 @@ std::map<std::string,FnPtr> functional_map =
   {"2015_4",aoc2015::day4::run},
   {"2015_5",aoc2015::day5::run},
   {"2015_6",aoc2015::day6::run},
+  {"2015_7",aoc2015::day7::run},
 };
 
 int main(int argc, char** argv)
