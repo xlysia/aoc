@@ -28,6 +28,9 @@ class Point{
     bool operator==(const Point& o){
         return x==o.x&&y==o.y;
     }
+    bool operator!=(const Point& o){
+        return x!=o.x||y!=o.y;
+    }
     bool operator<(const Point& o)const{
         return y<o.y || (y==o.y && x<o.x);
     }
