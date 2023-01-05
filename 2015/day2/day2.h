@@ -12,12 +12,12 @@ namespace aoc2015{
         void run(){
 
             std::cout << "Part 1" << std::endl;
-            assert (solvedayp1("./2015/input/day2sample")=="101");
-            std::cout << solvedayp1("./2015/input/day2") << std::endl;
+            assert (solvedayp1("./2015/day2/day2sample")=="101");
+            std::cout << solvedayp1("./2015/day2/day2") << std::endl;
 
             std::cout << "Part 2" << std::endl;
-            assert (solvedayp2("./2015/input/day2sample")=="48");
-            std::cout << solvedayp2("./2015/input/day2") << std::endl;
+            assert (solvedayp2("./2015/day2/day2sample")=="48");
+            std::cout << solvedayp2("./2015/day2/day2") << std::endl;
         }
 
         std::string solvedayp1(std::string p){
