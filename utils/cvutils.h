@@ -20,9 +20,10 @@ class Point{
         y+=o.y;
         return *this;
     }
+    Point operator*(const int o){
+        return Point(x*o,y*o);
+    }
     Point operator-(const Point& o){
-        this->x -= o.x;
-        this->y -= o.y;
         return Point(x-o.x,y-o.y);
     }
     bool operator==(const Point& o){
@@ -34,6 +35,9 @@ class Point{
     bool operator<(const Point& o)const{
         return y<o.y || (y==o.y && x<o.x);
     }
+
+    int norm_1(){return abs(x)+ abs(y);}
+    double norm_2(){return sqrt(x*x+y*y);}
 };
 
 extern void show(std::string title,int i);
