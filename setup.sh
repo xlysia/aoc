@@ -1,7 +1,7 @@
 HEADER=all_headers.h
 echo "#ifndef __ALL_HEADERS__" > $HEADER
 echo "#define __ALL_HEADERS__" >> $HEADER
-for i in $(seq 2015 2016)
+for i in $(seq 2015 2018)
 do
     for file in $i/*/*.h
     do
