@@ -58,13 +58,12 @@ namespace aoc2023{
             std::cin.rdbuf(in.rdbuf());
             std::string line;
             int ans =  0;        
-            int wins[100];
-            vector<int> cards(300,0);
+            int cards[300] = {0};
             int row = 0;
             while(getline(std::cin,line)){
                 cards[row]++;
                 ans += cards[row];
-                memset(wins,0,sizeof(wins));
+                int wins[100] = {0};
                 std::stringstream ss(line);
                 std::string card;
                 ss >> card >> card;
