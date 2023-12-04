@@ -27,10 +27,9 @@ namespace aoc2023{
             std::cin.rdbuf(in.rdbuf());
             std::string line;
             int ans =  0;        
-            int wins[100];
 
             while(getline(std::cin,line)){
-                memset(wins,0,sizeof(wins));
+                int wins[100] = {0};
                 std::stringstream ss(line);
                 std::string card;
                 ss >> card >> card;
