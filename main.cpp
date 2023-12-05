@@ -29,7 +29,7 @@ std::map<std::string,FnPtr> functional_map =
   {"2017_3",aoc2017::day3::run},
   {"2017_2",aoc2017::day2::run},
   {"2017_1",aoc2017::day1::run},
-  {"2016_11",aoc2016::day10::run},
+  {"2016_11",aoc2016::day11::run},
   {"2016_10",aoc2016::day10::run},
   {"2016_9",aoc2016::day9::run},
   {"2016_8",aoc2016::day8::run},
