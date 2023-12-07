@@ -97,9 +97,8 @@ namespace aoc2023{
 
             long long ans = 0;
             for(int i = 0; i < (int)hands.size(); i++){
-                auto [a,b,c] = hands[i];
                // cout << a << " " << b << " " << c << endl;
-                ans += c*(i+1);
+                ans += get<2>(hands[i])*(i+1);
             }
 
             return std::to_string(ans);
@@ -125,9 +124,7 @@ namespace aoc2023{
 
             long long ans = 0;
             for(int i = 0; i < (int)hands.size(); i++){
-                auto [a,b,c] = hands[i];
-               // cout << a << " " << b << " " << c << endl;
-                ans += c*(i+1);
+                ans +=  get<2>(hands[i])*(i+1);
             }
 
             return std::to_string(ans);
