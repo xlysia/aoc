@@ -76,26 +76,6 @@ namespace aoc2023{
             return std::to_string(move);
         }
 
-    long long gcd(long long a, long long b)
-    {
-        if (b == 0)
-            return a;
-        return gcd(b, a % b);
-    }
-    
-    // Returns LCM of array elements
-    long long findlcm(vector<int> arr)
-    {
-        int n = arr.size();
-        long long  ans = arr[0];
-        for (int i = 1; i < n; i++)
-            ans = (((arr[i] * ans)) /
-                    (gcd(arr[i], ans)));
-    
-        return ans;
-    }
-    
-
         std::string solvedayp2(std::string p){
             std::ifstream in(p);
             std::cin.rdbuf(in.rdbuf());
@@ -148,11 +128,11 @@ namespace aoc2023{
                     if(visited.back().find(key) != visited.back().end()){
                         cycles.push_back(move-visited.back()[key]);
                         
-                        cout << "cycle found for " << i<<" at key " << key<<" "<< move-visited.back()[key];
-                        for(auto [k,v]:visited.back()){
-                            cout << "(" <<k << " ," << v << " )";
-                        }
-                        cout << endl;
+                        // cout << "cycle found for " << i<<" at key " << key<<" "<< move-visited.back()[key];
+                        // for(auto [k,v]:visited.back()){
+                        //     cout << "(" <<k << " ," << v << " )";
+                        // }
+                        // cout << endl;
                         i++;
                         move = 0;
                         
@@ -162,8 +142,11 @@ namespace aoc2023{
                     }
                 }
             }
-
-            return std::to_string(findlcm(cycles));
+            long long ans = 1;
+            for(int i = 0; i < (int)cycles.size(); i++){
+                ans = std::lcm(ans, (long long)cycles[i]);
+            }
+            return std::to_string(ans);
         }
     }
 }
