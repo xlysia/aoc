@@ -43,6 +43,7 @@ class Point{
 extern void show(std::string title,int i);
 void resize(int x);
 void  showResize(std::string title,int i);
+extern cv::Vec3b getPixel(int x,int y);
 extern void setPixel(int x,int y,cv::Vec3b c);
 extern void setBackgroundPixel(int x,int y,cv::Vec3b c);
 extern void newFrame(cv::Size size = cv::Size(1000,1000),cv::Scalar c = cv::Scalar(0,0,0));

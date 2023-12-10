@@ -24,6 +24,10 @@ void setBackgroundPixel(int x,int y,cv::Vec3b c){
     background.at<cv::Vec3b>(cv::Point(x,y)) = c;
 }
 
+cv::Vec3b getPixel(int x,int y){
+    return img.at<cv::Vec3b>(cv::Point(x,y));
+}
+
 void show(std::string title,int i){
     cv::imshow(title, img);
     cv::waitKey(i);
