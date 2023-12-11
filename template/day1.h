@@ -10,11 +10,11 @@ namespace aoc2015{
         std::string solvedayp2(std::string p);
         void run(){
             std::cout << "Part 1" << std::endl;
-            assert (solvedayp1("./2015/day1/day1sample")=="-3");
+            assert (solvedayp1("./2015/day1/day1sample")=="NOTDEF");
             std::cout << solvedayp1("./2015/day1/day1") << std::endl;
 
             std::cout << "Part 2" << std::endl;
-            assert (solvedayp2("./2015/day1/day1sample")=="-1");
+            assert (solvedayp2("./2015/day1/day1sample")=="NOTDEF");
             std::cout << solvedayp2("./2015/day1/day1") << std::endl;
         }
 
@@ -22,16 +22,16 @@ namespace aoc2015{
             std::ifstream in(p);
             std::cin.rdbuf(in.rdbuf());
             std::string line;
-            int res =  0;
-            return std::to_string(res);
+            int ans =  0;
+            return std::to_string(ans);
         }
 
         std::string solvedayp2(std::string p){
             std::ifstream in(p);
             std::cin.rdbuf(in.rdbuf());
- 	    std::string line;
-            int res = 0;
-            return std::to_string(res);
+ 	        std::string line;
+            int ans = 0;
+            return std::to_string(ans);
         }
     }
 }
