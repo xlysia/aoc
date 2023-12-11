@@ -23,15 +23,15 @@ namespace aoc2015{
             std::cin.rdbuf(in.rdbuf());
             std::string line;
             std::getline(std::cin,line);
-            int res =  0;
-            return std::to_string(res);
+            int ans =  0;
+            return std::to_string(ans);
         }
 
         std::string solvedayp2(std::string p){
             std::ifstream in(p);
             std::cin.rdbuf(in.rdbuf());
-            int res = 0;
-            return std::to_string(res);
+            int ans = 0;
+            return std::to_string(ans);
         }
     }
 }
