@@ -52,4 +52,5 @@ extern void newFrameBW(cv::Size size = cv::Size(1000,1000));
 extern void drawText(double x,double y , cv::Scalar c , std::string msg,int s);
 extern void drawCircle( double x, double y,double r, cv::Scalar c, std::string msg = "");
 extern void drawLine( std::vector<cv::Point> pts , cv::Scalar c, int thickness, std::string msg = "");
+extern void saveFrame(std::string title);
 #endif

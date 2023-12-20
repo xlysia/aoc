@@ -65,3 +65,7 @@ void drawLine( std::vector<cv::Point> pts , cv::Scalar c, int thickness, std::st
     }
 
 }
+
+void saveFrame(std::string title){
+    cv::imwrite(title+".png",img);
+}
