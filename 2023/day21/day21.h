@@ -72,41 +72,10 @@ namespace aoc2023{
                 for(char c: line)visited.back().push_back(c=='#'?INT_MAX:0);
                 grid.push_back(line);
             }
-            int m = grid.size();
-            vector<string> biggrid(5*m,string(5*m,'.'));
-            // copy grid inside each of biggrid tiles
-            for(int a = 0; a < 5; a++){
-                for(int b = 0; b < 5; b++){
-                    for(int i = 0; i < m; i++){
-                        for(int j = 0; j < m; j++){
-                            biggrid[a*m+i][b*m+j] = grid[i][j];
-                        }
-                    }
-                }
-            }
-            // we start at the center of the biggrid
-            int sx = 2*m + m/2, sy = 2*m + m/2;
-            int ans = bfs({sx,sy},steps,biggrid);
+        
+            int ans = bfs(start,steps,grid);
             return std::to_string(ans);
         }
-
-
-        void dfs(int i,int j, int d, int max_depth , vector<string>& grid, set<tuple<int,int,int>>& visited,vector<int>& frontiers){
-            if(d == max_depth)return;
-            int n = grid.size();
-
-            for(auto [x,y] : adj){
-                x+=i,y+=j;
-                if(grid[((x%n)+n)%n][((y%n)+n)%n] == '#')continue;
-                if(visited.count({x,y,d}))continue;
-                visited.insert({x,y,d});
-                frontiers[d]++;
-                dfs(x,y,d+1,max_depth,grid,visited,frontiers);
-            }
-            
-        }
-
-
 
         std::string solvedayp2(std::string p,int steps){
             std::ifstream in(p);
