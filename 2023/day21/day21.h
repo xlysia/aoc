@@ -20,18 +20,43 @@ namespace aoc2023{
         std::string solvedayp2(std::string p, int steps);
         void run(){
             std::cout << "Part 1" << std::endl;
+            assert (solvedayp1("./2023/day21/day21sample",6)=="16");
             std::cout << solvedayp1("./2023/day21/day21",64) << std::endl;
 
             std::cout << "Part 2" << std::endl;
-    //        assert (solvedayp2("./2023/day21/day21sample",5000)=="16733044");
             std::cout << solvedayp2("./2023/day21/day21",26501365) << std::endl;
+        }
+        pair<int,int> adj[4] = {{0,1},{0,-1},{1,0},{-1,0}};
+
+        int bfs(pair<int,int> start, int steps, vector<string>& grid){
+            int ans = 0;
+            int m = grid.size(), n = grid[0].size();
+            vector<vector<bool>> seen (m,vector<bool>(n,false));
+            vector<vector<bool>> frontier(m,vector<bool>(n,false));
+
+            queue<tuple<int,int,int>> q;
+            q.push({start.first,start.second,steps});
+
+            while(!q.empty()){
+                auto [i,j,d] = q.front();
+                q.pop();
+                if(d%2==0 && !frontier[i][j]){ans++;frontier[i][j]=true;}
+                if(d==0)continue;
+                for(auto [x,y] : adj){
+                    x+=i,y+=j;
+                    if(x<0||y<0||x>=m||y>=n || grid[x][y] == '#'||seen[x][y])continue;
+                    q.push({x,y,d-1});
+                    seen[x][y] = true;
+                }
+            }
+
+            return ans;
         }
 
         std::string solvedayp1(std::string p,int steps){
             std::ifstream in(p);
             std::cin.rdbuf(in.rdbuf());
             std::string line;
-            int ans =  0;
 
             vector<string> grid;
             vector<vector<int>> visited;
@@ -47,32 +72,24 @@ namespace aoc2023{
                 for(char c: line)visited.back().push_back(c=='#'?INT_MAX:0);
                 grid.push_back(line);
             }
-
-            int m = grid.size(), n = grid[0].size();
-
-            queue<point> q;
-            q.push(start);
-
-            point adj[4] = {{0,1},{0,-1},{1,0},{-1,0}};
-            int N = 0;
-            while(N++ < steps && !q.empty()){
-                ans = q.size();
-                while(ans--){
-                    auto [i,j] = q.front();
-                    q.pop();
-                    for(auto [x,y] : adj){
-                        x+=i,y+=j;
-                        if(x<0||y<0||x>=m||y>=n || grid[x][y] == '#'||visited[x][y] >= N)continue;
-                        q.push({x,y});
-                        visited[x][y] = N;
+            int m = grid.size();
+            vector<string> biggrid(5*m,string(5*m,'.'));
+            // copy grid inside each of biggrid tiles
+            for(int a = 0; a < 5; a++){
+                for(int b = 0; b < 5; b++){
+                    for(int i = 0; i < m; i++){
+                        for(int j = 0; j < m; j++){
+                            biggrid[a*m+i][b*m+j] = grid[i][j];
+                        }
                     }
                 }
             }
-            ans = q.size();
+            // we start at the center of the biggrid
+            int sx = 2*m + m/2, sy = 2*m + m/2;
+            int ans = bfs({sx,sy},steps,biggrid);
             return std::to_string(ans);
         }
 
-        pair<int,int> adj[4] = {{0,1},{0,-1},{1,0},{-1,0}};
 
         void dfs(int i,int j, int d, int max_depth , vector<string>& grid, set<tuple<int,int,int>>& visited,vector<int>& frontiers){
             if(d == max_depth)return;
@@ -88,6 +105,8 @@ namespace aoc2023{
             }
             
         }
+
+
 
         std::string solvedayp2(std::string p,int steps){
             std::ifstream in(p);
@@ -108,23 +127,45 @@ namespace aoc2023{
                 grid.push_back(line);
             }
 
+            // extrapolate  
+
+            /*     X 
+                 X X X
+               X X X X X
+                 X X X 
+                   X
+                each X is a tile that is the current input grid create the big one            
+            */
             int m = grid.size();
+            vector<string> biggrid(5*m,string(5*m,'.'));
+            // copy grid inside each of biggrid tiles
+            for(int a = 0; a < 5; a++){
+                for(int b = 0; b < 5; b++){
+                    for(int i = 0; i < m; i++){
+                        for(int j = 0; j < m; j++){
+                            biggrid[a*m+i][b*m+j] = grid[i][j];
+                        }
+                    }
+                }
+            }
+            // we start at the center of the biggrid
+            int sx = 2*m + m/2, sy = 2*m + m/2;
 
-            set<tuple<int,int,int>> visited;
-            int maxdepth = (steps%m) + 2*m;
-            vector<int> frontiers(maxdepth);
-            dfs(get<0>(start),get<1>(start),0,maxdepth,grid,visited,frontiers);
+            int r = steps%m;
 
-            // extrapolate
+            vector<long long> ys = {bfs({sx,sy},r,biggrid),bfs({sx,sy},r+m,biggrid),bfs({sx,sy},r+2*m,biggrid)};
+
+            // get ys with dfs
+
+
 /*
 b0 + (b1 * x) + (x*(x-1)/2)*(b2-b1)
-
 */
-            int r = steps%m;
-            vector<long long> ys = {frontiers[r-1],frontiers[m+r-1],frontiers[2*m+r-1]};
+
             long long a = ys[0];
             long long b = ys[1] - ys[0];
             long long c = ys[2] - ys[1];
+
             long long target = steps/m;
             ans =  a + (b * target) + (target*(target-1)/2)*(c-b);
             return std::to_string(ans);
