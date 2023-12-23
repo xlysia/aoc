@@ -176,6 +176,8 @@ namespace aoc2023{
             }
             point start = {0,1};
             
+            // now that we have too many paths to explore we need to reduce the search space, so we create the equivalent graph from tiles with more than 2 connexions.
+
             // do a BFS to find all connected components
             vector<vector<point>> adj;
 
