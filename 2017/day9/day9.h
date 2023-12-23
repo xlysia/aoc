@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream> 
 
+using namespace std;
+
 namespace aoc2017{
     namespace day9{
 
