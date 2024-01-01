@@ -53,4 +53,7 @@ extern void drawText(double x,double y , cv::Scalar c , std::string msg,int s);
 extern void drawCircle( double x, double y,double r, cv::Scalar c, std::string msg = "");
 extern void drawLine( std::vector<cv::Point> pts , cv::Scalar c, int thickness, std::string msg = "");
 extern void saveFrame(std::string title);
+extern void showROI(cv::Rect r,std::string title , int i);
+extern void showROI(int x,int y,int w,std::string title , int i);
+
 #endif

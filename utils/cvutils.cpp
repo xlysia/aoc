@@ -69,3 +69,40 @@ void drawLine( std::vector<cv::Point> pts , cv::Scalar c, int thickness, std::st
 void saveFrame(std::string title){
     cv::imwrite(title+".png",img);
 }
+
+void showROI(cv::Rect r,std::string title , int i){
+    cv::Mat roi = img(r);
+    // resize to fit h = 1000
+    int h = 1000;
+    int w = h*r.width/r.height;
+    cv::resize(roi, roi, cv::Size(w,h), 0, 0, cv::INTER_AREA);
+    cv::imshow(title, roi);
+    cv::waitKey(i);
+}
+cv::Rect memoROi = cv::Rect(0,0,0,0);
+void showROI(int x,int y,int w,std::string title , int i){
+
+    
+    if(memoROi.width == 0){
+        x = std::min(std::max(0,x-w/2),img.cols-w);
+        y = std::min(std::max(0,y-w/2),img.rows-w);
+        memoROi = cv::Rect(x,y,w,w);
+    }
+
+    if( x < std::max(0,memoROi.x - w/2) || x > memoROi.x + w/2 || y < std::max(0,memoROi.y-w/2) || y > memoROi.y+w/2){
+        x = std::min(std::max(0,x-w/2),img.cols-w);
+        y = std::min(std::max(0,y-w/2),img.rows-w);
+        memoROi = cv::Rect(x,y,w,w);
+    }
+
+    cv::Rect r = memoROi;
+
+
+    cv::Mat roi = img(r);
+    // resize to fit h = 1000
+    int h = 1000;
+    w = h*r.width/r.height;
+    cv::resize(roi, roi, cv::Size(w,h), 0, 0, cv::INTER_AREA);
+    cv::imshow(title, roi);
+    cv::waitKey(i);
+}
