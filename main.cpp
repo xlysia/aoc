@@ -15,6 +15,7 @@ typedef void (*FnPtr)();
 
 std::map<std::string,FnPtr> functional_map =
 {
+  {"2024_1",aoc2024::day1::run},
   {"2018_25",aoc2018::day25::run},
   {"2018_24",aoc2018::day24::run},
   {"2018_23",aoc2018::day23::run},
