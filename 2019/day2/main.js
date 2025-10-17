@@ -1,37 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-
-// Read input.txt file
-function readInputFile() {
-    try {
-        // we should be able to read input from URL or file
-  
-        const url = 'https://adventofcode.com/2019/day/2/input';
-
-        // Wait for the response to finish
-        https.get(url, (res) => {
-            let data = '';
-
-            // Read data from the response
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-
-            // On end of response, return the data
-            res.on('end', () => {
-                if (data) return data.trim();
-                console.log('No data from URL');
-            });
-        });
-
-        // Fallback to reading from local file if URL fetch fails
-        console.log('No data from URL');
-    } catch (error) {
-        console.error('Error reading input.txt:', error.message);
-        return null;
-    }
-}
+const { readInput, parseCommaSeparatedInts } = require('../../js/utils/readInput');
 
 function Intcode(program, noun, verb) {
     program[1] = noun;
@@ -59,16 +26,15 @@ function Intcode(program, noun, verb) {
     }
 }
 
-
 // Main function
-function main() {
+async function main() {
     console.log('AoC 2019 day 2! Reading from input...\n');
     
-    const input = readInputFile();
+    const input = await readInput(2019, 2);
     
     if (input !== null) {
         // Input is comma separated integers
-        const numbers = input.split(',').map(num => parseInt(num.trim()));
+        const numbers = parseCommaSeparatedInts(input);
         
         console.log('PartI:', Intcode(numbers.slice(), 12, 2));
 
@@ -82,6 +48,8 @@ function main() {
             }
         }
         console.log('No solution found for Part II');
+    } else {
+        console.log('Failed to read input data');
     }
     return 0;
 }

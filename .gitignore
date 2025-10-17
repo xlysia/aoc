@@ -37,3 +37,12 @@
 /.vscode/
 
 all_headers.h
+
+# Advent of Code session configuration (contains secret tokens)
+js/utils/config.env
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
