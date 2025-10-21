@@ -7,8 +7,11 @@ class IntcodeComputer {
         this.memory = [...program];
         this.pc = 0;
         this.inputptr = 0;
+        this.outputptr = 0;
         this.input = [];
+        this.output = [];
         this.halted = false;
+        this.waitingForInput = false;
     }
 
     // Run the program
@@ -20,11 +23,11 @@ class IntcodeComputer {
         //     this.memory.push(0);
         // }
 
-        while (!this.halted) {
+        while (!this.halted && !this.waitingForInput) {
 
             this.step();
         }
-        return;
+        return this.memory[0];
     }
 
     // Execute one instruction
@@ -72,7 +75,8 @@ class IntcodeComputer {
             case 3: // Input
                 {
                     if (this.inputptr >= this.input.length) {
-                        throw new Error(`Input exhausted: need input at PC ${this.pc}`);
+                        this.waitingForInput = true;
+                        return; 
                     }
                     const writeAddr = getWriteAddr(1);
                     this.memory[writeAddr] = this.input[this.inputptr];
@@ -84,7 +88,7 @@ class IntcodeComputer {
             case 4: // Output
                 {
                     const val = getParam(1, mode1);
-                    console.log(val);
+                    this.output.push(val);
                     this.pc += 2;
                 }
                 break;
@@ -132,11 +136,21 @@ class IntcodeComputer {
         this.memory = [...program];
         this.pc = 0;
         this.halted = false;
+        this.output = [];
     }
 
     setInput(input) {
         this.input = input;
         this.inputptr = 0;
+        this.waitingForInput = false;
+    }
+
+    getLastOutput() {
+        return this.output[this.output.length - 1] || 0;
+    }
+
+    getOutput(){
+        return this.output[this.outputptr++] || 0;
     }
 }
 
