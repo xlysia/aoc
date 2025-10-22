@@ -12,16 +12,14 @@ class IntcodeComputer {
         this.output = [];
         this.halted = false;
         this.waitingForInput = false;
+        this.base = 0;
     }
 
     // Run the program
     run() {
         this.halted = false;
 
-        // make sure memory is large enough
-        // while (this.memory.length < 10000) {
-        //     this.memory.push(0);
-        // }
+
 
         while (!this.halted && !this.waitingForInput) {
 
@@ -30,6 +28,12 @@ class IntcodeComputer {
         return this.memory[0];
     }
 
+    enlarge(){
+        // make sure memory is large enough
+        while (this.memory.length < 10000) {
+            this.memory.push(0);
+        }
+    }
     // Execute one instruction
     step() {
         if (this.halted) return;
@@ -43,12 +47,16 @@ class IntcodeComputer {
         // Helper function to get parameter value based on mode
         const getParam = (paramNum, mode) => {
             const rawParam = this.memory[this.pc + paramNum];
-            return mode === 1 ? rawParam : this.memory[rawParam] || 0;
+            if(mode === 1) return rawParam; // Immediate mode
+            if(mode === 2) return this.memory[this.base + rawParam] || 0; // Relative mode
+            return this.memory[rawParam] || 0; // Position mode
         };
 
-        // Helper function to get write address (always position mode for writes)
-        const getWriteAddr = (paramNum) => {
-            return this.memory[this.pc + paramNum];
+        // Helper function to get write address based on mode
+        const getWriteAddr = (paramNum, mode) => {
+            const rawParam = this.memory[this.pc + paramNum];
+            if(mode === 2) return this.base + rawParam; // Relative mode
+            return rawParam; // Position mode (mode 0 or 1, but writes are never immediate)
         };
 
         switch (opcode) {
@@ -56,7 +64,7 @@ class IntcodeComputer {
                 {
                     const val1 = getParam(1, mode1);
                     const val2 = getParam(2, mode2);
-                    const writeAddr = getWriteAddr(3);
+                    const writeAddr = getWriteAddr(3, mode3);
                     this.memory[writeAddr] = val1 + val2;
                     this.pc += 4;
                 }
@@ -66,7 +74,7 @@ class IntcodeComputer {
                 {
                     const val1 = getParam(1, mode1);
                     const val2 = getParam(2, mode2);
-                    const writeAddr = getWriteAddr(3);
+                    const writeAddr = getWriteAddr(3, mode3);
                     this.memory[writeAddr] = val1 * val2;
                     this.pc += 4;
                 }
@@ -78,7 +86,7 @@ class IntcodeComputer {
                         this.waitingForInput = true;
                         return; 
                     }
-                    const writeAddr = getWriteAddr(1);
+                    const writeAddr = getWriteAddr(1, mode1);
                     this.memory[writeAddr] = this.input[this.inputptr];
                     this.inputptr++;
                     this.pc += 2;
@@ -109,7 +117,7 @@ class IntcodeComputer {
                 {   
                     const val1 = getParam(1, mode1);
                     const val2 = getParam(2, mode2);
-                    const writeAddr = getWriteAddr(3);
+                    const writeAddr = getWriteAddr(3, mode3);
                     if ((opcode === 7 && val1 < val2) || (opcode === 8 && val1 === val2)) {
                         this.memory[writeAddr] = 1;
                     } else {
@@ -117,6 +125,11 @@ class IntcodeComputer {
                     }
                     this.pc += 4;
                 }
+                break;
+            case 9:
+                const val1 = getParam(1, mode1);
+                this.base += val1;
+                this.pc +=2;
                 break;
             case 99: // Halt
                 this.halted = true;
@@ -137,6 +150,7 @@ class IntcodeComputer {
         this.pc = 0;
         this.halted = false;
         this.output = [];
+        this.base = 0;
     }
 
     setInput(input) {
