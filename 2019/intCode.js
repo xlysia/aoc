@@ -150,6 +150,7 @@ class IntcodeComputer {
         this.pc = 0;
         this.halted = false;
         this.output = [];
+        this.outputptr = 0;
         this.base = 0;
     }
 

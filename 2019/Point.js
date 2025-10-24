@@ -35,6 +35,13 @@ class Point {
         return new Point(this.x, this.y);
     }
     
+    // Move by adding another point (modifies this point)
+    move(other) {
+        this.x += other.x;
+        this.y += other.y;
+        return this;
+    }
+    
     // String representation
     toString() {
         return `(${this.x}, ${this.y})`;
