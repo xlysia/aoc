@@ -167,6 +167,11 @@ class IntcodeComputer {
     getOutput(){
         return this.output[this.outputptr++] || 0;
     }
+    
+    clearOuput(){
+        this.output = [];
+        this.outputptr = 0;
+    }
 }
 
 function Intcode(program, noun, verb) {
