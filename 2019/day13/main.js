@@ -82,7 +82,7 @@ async function main() {
 
         score = 0;
         let partII = 0;
-        let blocks = 0;
+
         let Ball = new Point(0,0);
         let Paddle = new Point(0,0);       
         // Run the arcade game and collect output
@@ -92,7 +92,6 @@ async function main() {
         while(!arcade.halted){
             arcade.run();
             outputs = arcade.output;
-
             board = create2DArray(100,100,TILES.EMPTY);
             for (let i = 0; i < outputs.length; i += 3) {
                 const x = outputs[i];
@@ -102,15 +101,10 @@ async function main() {
                 if(x===-1 && y === 0){
                     score = tileId;
                 }else{
-                    if(board[y][x] === TILES.BLOCK)blocks--;
-                    if(tileId == TILES.BLOCK)blocks++;
                     board[y][x] = tileId;
                     switch(tileId){
                         case TILES.BALL:
                             Ball = new Point(x,y);
-                            break;
-                        case TILES.BLOCK:
-                            blocks++;
                             break;
                         case TILES.PADDLE:
                             Paddle = new Point(x,y);
@@ -123,10 +117,6 @@ async function main() {
             if(arcade.waitingForInput){
                 const move = Math.sign(Ball.x - Paddle.x);
                 arcade.setInput([move]);
-            }
-
-            if(blocks === 0){
-                console.log("GAME DONE");
             }
 
         }
