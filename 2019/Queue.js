@@ -9,6 +9,11 @@ class Queue {
         this.items.push(item);
     }
     
+    // Add to front of queue (priority insertion)
+    enqueueFront(item) {
+        this.items.unshift(item);
+    }
+    
     // Remove from front of queue
     dequeue() {
         return this.items.shift();
@@ -29,3 +34,8 @@ class Queue {
         return this.items[0];
     }
 }
+
+// Export both the class and the simple function
+module.exports = {
+    Queue,
+};
