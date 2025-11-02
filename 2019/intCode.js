@@ -172,6 +172,12 @@ class IntcodeComputer {
         this.output = [];
         this.outputptr = 0;
     }
+
+    getAllOutputs(){
+        const res = this.output;
+        this.clearOuput();
+        return res;
+    }
 }
 
 function Intcode(program, noun, verb) {
