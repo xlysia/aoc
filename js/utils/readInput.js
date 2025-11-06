@@ -109,13 +109,13 @@ async function readInput(year, day, baseDir = null) {
                         
                         // Optionally save to local file for future use
                         try {
-                            fs.writeFileSync(inputPath, data.trim());
+                            fs.writeFileSync(inputPath, data);
                             console.log('Saved input to local file for future use');
                         } catch (err) {
                             console.log('Could not save to local file:', err.message);
                         }
                         
-                        resolve(data.trim());
+                        resolve(data);
                     } else {
                         console.log('No data received from URL');
                         resolve(null);
