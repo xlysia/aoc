@@ -1,7 +1,6 @@
-const { readInput, parseLines } = require('../../js/utils/readInput');
+const { readInput, parseGrid } = require('../../js/utils/readInput');
 const { Point } = require('../Point');
 const fs = require('fs');
-const { patch } = require('simple-get');
 
 const dirs = [
     new Point(0, -1), // up
@@ -96,10 +95,10 @@ async function main() {
     const input = await readInput(2019, 20);
     
     if (input !== null) {
-        const map = parseLines(input).map(line => line.split(''));
+        const map = parseGrid(input);
 
         const portals = findPortals(map);
-        console.log("Found ", portals.length ,"portals");
+        console.log("Found ", portals.size ,"portals");
     } else {
         console.log('Failed to read input data');
     }
