@@ -59,7 +59,7 @@ async function readInput(year, day, baseDir = null) {
         const inputPath = path.join(baseDir, 'input.txt');
         if (fs.existsSync(inputPath)) {
             console.log('Reading from local file...');
-            return fs.readFileSync(inputPath, 'utf8').trim();
+            return fs.readFileSync(inputPath, 'utf8');
         }
 
         // If no local file, try to fetch from URL
@@ -109,13 +109,13 @@ async function readInput(year, day, baseDir = null) {
                         
                         // Optionally save to local file for future use
                         try {
-                            fs.writeFileSync(inputPath, data.trim());
+                            fs.writeFileSync(inputPath, data);
                             console.log('Saved input to local file for future use');
                         } catch (err) {
                             console.log('Could not save to local file:', err.message);
                         }
                         
-                        resolve(data.trim());
+                        resolve(data);
                     } else {
                         console.log('No data received from URL');
                         resolve(null);
@@ -166,7 +166,7 @@ function getCallerFile() {
  * @returns {string[]} Array of lines
  */
 function parseLines(input) {
-    return input.split('\n').filter(line => line.trim() !== '');
+    return input.split('\n').filter(line => line !== '');
 }
 
 /**
