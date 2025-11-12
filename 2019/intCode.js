@@ -37,7 +37,13 @@ class IntcodeComputer {
     // Execute one instruction
     step() {
         if (this.halted) return;
-        const instruction = this.memory[this.pc];
+        
+        // Ensure memory is accessible
+        if (this.pc >= this.memory.length) {
+            this.enlarge();
+        }
+        
+        const instruction = this.memory[this.pc] || 0;
         const opcode = instruction % 100;
 
         const mode1 = Math.floor(instruction / 100) % 10;
@@ -136,6 +142,8 @@ class IntcodeComputer {
                 break;
 
             default:
+                console.log(`PC: ${this.pc}, Instruction: ${instruction}, Opcode: ${opcode}`);
+                console.log(`Memory around PC:`, this.memory.slice(Math.max(0, this.pc-5), this.pc+10));
                 throw new Error(`Unknown opcode: ${opcode} at position ${this.pc}`);
         }
     }
