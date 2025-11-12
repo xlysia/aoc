@@ -66,25 +66,45 @@ async function main() {
 
         // Part I: Find the first packet sent to address 255
         let partI = null;
-        
-        while (partI === null) {
-                        
+        let partII = null;
+        let NATpacket = null;
+
+        while (true) {
+            let anyPackets = false;
+            
             for (let i = 0; i < 50; i++) {
                 const packets = computers[i].step();
                 
+                if (packets.length > 0) {
+                    anyPackets = true;
+                }
+                
                 for (const packet of packets) {
                     if (packet.dest === 255) {
-                        partI = packet.y;
-                        console.log(`Part I: First packet to address 255 has Y value ${partI}`);
-                        break;
+                        if (partI === null) {
+                            partI = packet.y;
+                            console.log(`Part I: First packet to address 255 has Y value ${partI}`);
+                        } 
+                        NATpacket = { x: packet.x, y: packet.y };
                     } else if (packet.dest >= 0 && packet.dest < 50) {
                         computers[packet.dest].addPacket(packet.x, packet.y);
                     }
                 }
-                
-                if (partI !== null) break;
             }
-
+            
+            // Check if network is idle (no packets produced and all computers idle)
+            let allIdle = computers.every(c => c.idle);
+            
+            if (!anyPackets && allIdle && NATpacket !== null) {
+                //console.log("Network idle, NAT sending packet:", NATpacket);
+                computers[0].addPacket(NATpacket.x, NATpacket.y);
+                
+                if (partII === NATpacket.y) {
+                    console.log(`Part II: NAT sent duplicate Y value ${partII}`);
+                    break;
+                }
+                partII = NATpacket.y;
+            }
         }
 
     } else {
